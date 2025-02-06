@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>growth - Plant Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a2e29;
+            color: white;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-hover {
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .button-hover:hover {
+            transform: scale(1.05);
+        }
+
+        .scroll-images {
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+        }
+
+        .cart-animation {
+            transition: transform 0.3s ease;
+        }
+
+        .cart-animation.added {
+            animation: cartBounce 0.5s ease;
+        }
+
+        @keyframes cartBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .footer-bg {
+            background: linear-gradient(rgba(26, 46, 41, 0.9), rgba(26, 46, 41, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 90C50 90 80 60 80 40C80 20 65 10 50 10C35 10 20 20 20 40C20 60 50 90 50 90Z" fill="%234CAF50"/><path d="M50 80C50 80 70 60 70 45C70 30 60 22.5 50 22.5C40 22.5 30 30 30 45C30 60 50 80 50 80Z" fill="%2366BB6A"/><path d="M50 70C50 70 60 55 60 45C60 35 55 30 50 30C45 30 40 35 40 45C40 55 50 70 50 70Z" fill="%2381C784"/></svg>');
+            background-repeat: repeat;
+            animation: bgScroll 20s linear infinite;
+        }
+
+        @keyframes bgScroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#1a2e29]/80 backdrop-blur-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-2xl font-bold">growth</a>
+                    <a href="#" class="hover:text-green-400 transition-colors">Home</a>
+                    <a href="#" class="hover:text-green-400 transition-colors">Shop</a>
+                    <a href="#" class="hover:text-green-400 transition-colors">About</a>
+                    <a href="#" class="hover:text-green-400 transition-colors">Blog</a>
+                    <a href="#" class="hover:text-green-400 transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="hover:text-green-400 transition-colors">Search</a>
+                    <a href="#" class="hover:text-green-400 transition-colors relative">
+                        Cart
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="imgs/hero.png" alt="Background" class="w-full h-full object-cover brightness-50">
+        </div>
+        <div class="container mx-auto px-4 z-10 text-center" data-aos="fade-up">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6">growth</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                Discover our curated collection of beautiful plants to bring life to your space
+            </p>
+            <button class="bg-green-500 text-white px-8 py-3 rounded-full hover:bg-green-600 transition-colors button-hover">
+                Shop tropical plants
+            </button>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12">Plants for Every Space</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up">
+                    <img src="imgs/outdoor.jpg" alt="Outdoor Plant" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Outdoor Plant</h3>
+                        <p class="text-gray-300">Perfect for your garden</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <img src="imgs/indoor.png" alt="Indoor Plant" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Indoor Plant</h3>
+                        <p class="text-gray-300">Brighten up your home</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <img src="imgs/potted.jpg" alt="Potted Plant" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Potted Plant</h3>
+                        <p class="text-gray-300">Ready for your space</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <img src="imgs/hanging.jpg" alt="Hanging Plant" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Hanging Plant</h3>
+                        <p class="text-gray-300">Add dimension to your decor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#243c37]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12">New Arrivals</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up">
+                    <img src="imgs/Peperomia.jpg" alt="Peperomia Plants" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Peperomia Plants</h3>
+                        <p class="text-green-400 mb-4">$24.99</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover add-to-cart">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="imgs/Fiddle-Leaf Fig.webp" alt="Fiddle-Leaf Fig" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Fiddle-Leaf Fig</h3>
+                        <p class="text-green-400 mb-4">$34.99</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover add-to-cart">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <img src="imgs/Calathea Orbifolia.jpg" alt="Calathea Orbifolia" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Calathea Orbifolia</h3>
+                        <p class="text-green-400 mb-4">$29.99</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover add-to-cart">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <img src="imgs/Snake Plant.jpg" alt="Snake Plant" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Snake Plant</h3>
+                        <p class="text-green-400 mb-4">$19.99</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover add-to-cart">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12">Indoor Collection</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up">
+                    <img src="imgs/Philodendron.jpg" alt="Philodendron" class="w-full h-80 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Philodendron</h3>
+                        <p class="text-gray-300">Lush and vibrant foliage</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <img src="imgs/Calathea.jpg" alt="Calathea" class="w-full h-80 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Calathea</h3>
+                        <p class="text-gray-300">Stunning patterns and colors</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <img src="imgs/Air Purifying.webp" alt="Air Purifying" class="w-full h-80 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Air Purifying</h3>
+                        <p class="text-gray-300">Clean air naturally</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <img src="imgs/Low Light Tolerant.webp" alt="Low Light Tolerant" class="w-full h-80 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Low Light Tolerant</h3>
+                        <p class="text-gray-300">Perfect for darker spaces</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="400">
+                    <img src="imgs/Trailing Plants.jpg" alt="Trailing Plants" class="w-full h-80 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Trailing Plants</h3>
+                        <p class="text-gray-300">Cascading beauty for shelves</p>
+                    </div>
+                </div>
+                <div class="card-hover relative rounded-2xl overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="500">
+                    <img src="imgs/Succulents.webp" alt="Succulents" class="w-full h-80 object-cover">
+                    <div class="absolute inset-0 bg-black/40 p-6 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold">Succulents</h3>
+                        <p class="text-gray-300">Low-maintenance desert charm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#243c37]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12">Seasonal Offers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up">
+                    <img src="imgs/Spring Collection.png" alt="Spring Collection" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Spring Collection</h3>
+                        <p class="text-gray-300 mb-4">Brighten up your space with our colorful spring plants</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">
+                            Shop Now
+                        </button>
+                    </div>
+                </div>
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="imgs/Summer Succulents.webp" alt="Summer Succulents" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Summer Succulents</h3>
+                        <p class="text-gray-300 mb-4">Low-maintenance plants perfect for the hot season</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">
+                            Shop Now
+                        </button>
+                    </div>
+                </div>
+                <div class="card-hover bg-[#1a2e29] rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <img src="imgs/Fall Favorites.jpg" alt="Fall Favorites" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Fall Favorites</h3>
+                        <p class="text-gray-300 mb-4">Cozy up with our selection of autumn-inspired plants</p>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">
+                            Shop Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12">Plant Care Tips</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#243c37] p-6 rounded-xl card-hover" data-aos="fade-up">
+                    <h3 class="text-xl font-semibold mb-4">Watering Guide</h3>
+                    <p class="text-gray-300">Learn the proper watering techniques for different types of plants.</p>
+                    <button class="mt-4 text-green-400 hover:text-green-500 transition-colors">Read More →</button>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-semibold mb-4">Light Requirements</h3>
+                    <p class="text-gray-300">Understanding the light needs of your indoor plants.</p>
+                    <button class="mt-4 text-green-400 hover:text-green-500 transition-colors">Read More →</button>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-semibold mb-4">Fertilizing Tips</h3>
+                    <p class="text-gray-300">Essential nutrients and feeding schedules for healthy growth.</p>
+                    <button class="mt-4 text-green-400 hover:text-green-500 transition-colors">Read More →</button>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-semibold mb-4">Pest Control</h3>
+                    <p class="text-gray-300">Natural and effective ways to keep your plants pest-free.</p>
+                    <button class="mt-4 text-green-400 hover:text-green-500 transition-colors">Read More →</button>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-xl font-semibold mb-4">Pruning Techniques</h3>
+                    <p class="text-gray-300">Learn how to prune your plants for optimal growth and shape.</p>
+                    <button class="mt-4 text-green-400 hover:text-green-500 transition-colors">Read More →</button>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl card-hover" data-aos="fade-up" data-aos-delay="500">
+                    <h3 class="text-xl font-semibold mb-4">Repotting Guide</h3>
+                    <p class="text-gray-300">When and how to repot your plants for continued health.</p>
+                    <button class="mt-4 text-green-400 hover:text-green-500 transition-colors">Read More →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#243c37]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center">Gift Cards</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <img src="imgs/Give the Gift of Green.jpg" alt="Gift Card" class="w-64 h-40 object-cover rounded-xl shadow-lg" data-aos="fade-right">
+                <div class="text-center md:text-left" data-aos="fade-left">
+                    <h3 class="text-2xl font-semibold mb-4">Give the Gift of Green</h3>
+                    <p class="text-gray-300 mb-6 max-w-md">Perfect for birthdays, holidays, or just because. Our gift cards let your loved ones choose their favorite plants.</p>
+                    <button class="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition-colors button-hover">
+                        Purchase Gift Card
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <div class="bg-[#243c37] rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-semibold flex justify-between items-center" 
+                            onclick="toggleAccordion(this)">
+                        Ordering for Delivery?
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transform transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 py-4 text-gray-300">
+                            Yes, we offer delivery services. Our team ensures that plants are carefully packaged and delivered to your doorstep in perfect condition.
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#243c37] rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-semibold flex justify-between items-center" 
+                            onclick="toggleAccordion(this)">
+                        Potting Services
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transform transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 py-4 text-gray-300">
+                            We offer potting services for your new purchases or you can bring in your own plants. Our experts will ensure proper potting for optimal growth.
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#243c37] rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-semibold flex justify-between items-center" 
+                            onclick="toggleAccordion(this)">
+                        Do we ship plants?
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transform transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 py-4 text-gray-300">
+                            Yes, we ship plants nationwide. We use specialized packaging to ensure your plants arrive healthy and undamaged.
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#243c37] rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-semibold flex justify-between items-center" 
+                            onclick="toggleAccordion(this)">
+                        Plant Care Support
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transform transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="px-6 py-4 text-gray-300">
+                            We provide ongoing support for plant care. Our experts are available to answer your questions and provide guidance on maintaining your plants.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#243c37]">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8">Join the community!</h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
+                Connect with fellow plant enthusiasts, share your green spaces, and get expert advice.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-[#1a2e29] text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">Instagram</button>
+                <button class="bg-[#1a2e29] text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">Twitter</button>
+                <button class="bg-[#1a2e29] text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">LinkedIn</button>
+                <button class="bg-[#1a2e29] text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">Facebook</button>
+                <button class="bg-[#1a2e29] text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors button-hover">Pinterest</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center">Customer Reviews</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#243c37] p-6 rounded-xl" data-aos="fade-up">
+                    <div class="flex items-center mb-4">
+                        <img src="imgs/download (2).jpeg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">Sarah L.</h4>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"Absolutely love the plants I received! They arrived in perfect condition and have been thriving in my home."</p>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <img src="imgs/download (1).jpeg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">Mike R.</h4>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"Great selection and excellent customer service. The care tips provided were very helpful for a beginner like me."</p>
+                </div>
+                <div class="bg-[#243c37] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <img src="imgs/download.jpeg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">Emily T.</h4>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"The quality of the plants is outstanding. I've ordered multiple times and have always been impressed with the health and beauty of each plant."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#243c37]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center">Plant Size Guide</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#1a2e29] p-6 rounded-xl text-center" data-aos="fade-up">
+                    <h3 class="text-2xl font-semibold mb-4">Small</h3>
+                    <img src="imgs/small plants.jpg" alt="Small Plant" class="w-32 h-32 mx-auto mb-4 rounded-full object-cover">
+                    <p class="text-gray-300">Perfect for desks and small spaces. Typically 4-8 inches tall.</p>
+                </div>
+                <div class="bg-[#1a2e29] p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-2xl font-semibold mb-4">Medium</h3>
+                    <img src="imgs/Medium plnats.jpg" alt="Medium Plant" class="w-32 h-32 mx-auto mb-4 rounded-full object-cover">
+                    <p class="text-gray-300">Great for tables and shelves. Usually 12-24 inches tall.</p>
+                </div>
+                <div class="bg-[#1a2e29] p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-2xl font-semibold mb-4">Large</h3>
+                    <img src="imgs/large plants.jpeg" alt="Large Plant" class="w-32 h-32 mx-auto mb-4 rounded-full object-cover">
+                    <p class="text-gray-300">Statement pieces for floors. Can grow over 3 feet tall.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-16 bg-[#1a2e29] relative overflow-hidden footer-bg">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">growth</h3>
+                    <p class="text-gray-300">Bringing nature indoors, one plant at a time.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-green-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-green-400 transition-colors">Plant Care</a></li>
+                        <li><a href="#" class="hover:text-green-400 transition-colors">FAQs</a></li>
+                        <li><a href="#" class="hover:text-green-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Email: hello@growth.com</li>
+                        <li>Phone: (555) 123-4567</li>
+                        <li>Address: 123 Plant Street, Green City</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Stay up to date with our latest offers and plant care tips.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="flex-grow px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-[#243c37] text-white">
+                        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-r-lg hover:bg-green-600 transition-colors button-hover">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 growth. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                    item.previousElementSibling.querySelector('svg').style.transform = 'rotate(0deg)';
+                }
+            });
+
+            content.classList.toggle('active');
+            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartCount = document.getElementById('cartCount');
+        let count = 0;
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.add('cart-animation', 'added');
+                setTimeout(() => {
+                    button.classList.remove('added');
+                }, 500);
+                count++;
+                cartCount.textContent = count;
+            });
+        });
+    </script>
+</body>
+</html>
